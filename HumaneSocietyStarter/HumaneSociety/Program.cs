@@ -13,12 +13,14 @@ namespace HumaneSociety
             // PointOfEntry.Run();        
 
             // Query.AddAnimal(animal);
-            //   var animal = Query.GetAnimalByID(3);
+              var animal = Query.GetAnimalByID(3);
             //var client =   Query.GetClient("msconv", "Deamon1!");
             // Query.Adopt(animal, client);
             // Query.GetAnimalByID(3);
             //Query.GetCategoryId("Dog");
-            Query.GetDietPlanId("chow");
+            // Query.GetDietPlanId("chow");
+            Query.RemoveAnimal(animal);
+
         }
     }
 }

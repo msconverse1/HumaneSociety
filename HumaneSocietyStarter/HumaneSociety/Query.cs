@@ -48,9 +48,15 @@ namespace HumaneSociety
             db.SubmitChanges();
 
         }
-        internal static void RemoveAnimal(object animal)
+        internal static void RemoveAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            Animal deletethis= db.Animals.Single(a => a == animal);
+            Adoption adoption = db.Adoptions.Single(a => a == animal.Adoptions.Single());
+            db.Animals.DeleteOnSubmit(deletethis);
+            db.Adoptions.DeleteOnSubmit(adoption);
+            //when rooms are made they need to be delt also
+            db.SubmitChanges();
         }
 
         internal static int? GetDietPlanId(string diet)
