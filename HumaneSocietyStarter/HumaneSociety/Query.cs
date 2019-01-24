@@ -8,18 +8,19 @@ namespace HumaneSociety
 {
     public static class Query
     {
-        internal static int? GetCategoryId()
+        internal static int? GetCategoryId(string name)
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
 
-            List<Category> categories = db.Categories.ToList();
+           var categories = db.Categories.Where(a=>a.Name == name).Single().CategoryId;
 
-            return null ;
+            return categories;
         }
         internal static void AddAnimal(Animal animal)
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
             db.Animals.InsertOnSubmit(animal);
+            db.SubmitChanges();
         }
         internal static Animal  GetAnimalByID(int ID)
         {
@@ -40,7 +41,7 @@ namespace HumaneSociety
 
             if (adoption.PaymentCollected == true)
             {
-                adoption.ApprovalStatus = "Approved";
+                adoption.ApprovalStatus = "true";
                 animal.AdoptionStatus = "Adopted";
             }
             db.Adoptions.InsertOnSubmit(adoption);
@@ -66,6 +67,11 @@ namespace HumaneSociety
             return client;
         }
 
+        internal static List<Adoption> GetPendingAdoptions()
+        {
+            throw new NotImplementedException();
+        }
+
         internal static List<Client> GetClients()
         {
              HumaneSocietyDataContext  db = new HumaneSocietyDataContext();
@@ -79,24 +85,27 @@ namespace HumaneSociety
         {
              HumaneSocietyDataContext  db = new HumaneSocietyDataContext();
 
-            Client newClient = new Client();
-
-            newClient.FirstName = firstName;
-            newClient.LastName = lastName;
-            newClient.UserName = username;
-            newClient.Password = password;
-            newClient.Email = email;
+            Client newClient = new Client
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                UserName = username,
+                Password = password,
+                Email = email
+            };
 
             Address addressFromDb = db.Addresses.Where(a => a.AddressLine1 == streetAddress && a.Zipcode == zipCode && a.USStateId == stateId).FirstOrDefault();
 
             // if the address isn't found in the Db, create and insert it
             if (addressFromDb == null)
             {
-                Address newAddress = new Address();
-                newAddress.AddressLine1 = streetAddress;
-                newAddress.AddressLine2 = null;
-                newAddress.Zipcode = zipCode;
-                newAddress.USStateId = stateId;
+                Address newAddress = new Address
+                {
+                    AddressLine1 = streetAddress,
+                    AddressLine2 = null,
+                    Zipcode = zipCode,
+                    USStateId = stateId
+                };
 
                 db.Addresses.InsertOnSubmit(newAddress);
                 db.SubmitChanges();
@@ -110,6 +119,26 @@ namespace HumaneSociety
             db.Clients.InsertOnSubmit(newClient);
 
             db.SubmitChanges();
+        }
+
+        internal static void RunEmployeeQueries(Employee employee, string v)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void UpdateAdoption(bool v, Adoption adoption)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static Room GetRoom(int animalId)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static List<Animal> SearchForAnimalByMultipleTraits()
+        {
+            throw new NotImplementedException();
         }
 
         internal static void UpdateClient(Client clientWithUpdates)
@@ -135,11 +164,13 @@ namespace HumaneSociety
             // if the address isn't found in the Db, create and insert it
             if(updatedAddress == null)
             {
-                Address newAddress = new Address();
-                newAddress.AddressLine1 = clientAddress.AddressLine1;
-                newAddress.AddressLine2 = null;
-                newAddress.Zipcode = clientAddress.Zipcode;
-                newAddress.USStateId = clientAddress.USStateId;
+                Address newAddress = new Address
+                {
+                    AddressLine1 = clientAddress.AddressLine1,
+                    AddressLine2 = null,
+                    Zipcode = clientAddress.Zipcode,
+                    USStateId = clientAddress.USStateId
+                };
 
                 db.Addresses.InsertOnSubmit(newAddress);
                 db.SubmitChanges();
@@ -152,6 +183,16 @@ namespace HumaneSociety
             
             // submit changes
             db.SubmitChanges();
+        }
+
+        internal static void UpdateShot(string v, Animal animal)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static List<AnimalShot> GetShots(Animal animal)
+        {
+            throw new NotImplementedException();
         }
 
         internal static Employee RetrieveEmployeeUser(string email, int employeeNumber)
@@ -168,6 +209,11 @@ namespace HumaneSociety
             {
                 return employeeFromDb;
             }            
+        }
+
+        internal static void EnterAnimalUpdate(Animal animal, Dictionary<int, string> updates)
+        {
+            throw new NotImplementedException();
         }
 
         internal static Employee EmployeeLogin(string userName, string password)
@@ -199,13 +245,14 @@ namespace HumaneSociety
 
             db.SubmitChanges();
         }
-        public DietPlan GetDietPlan()
+   
+ 
+        internal static void RemoveAnimal(object animal)
         {
-
-            return DietPlan;
+            throw new NotImplementedException();
         }
 
-        internal static void RemoveAnimal(object animal)
+        internal static int? GetDietPlanId()
         {
             throw new NotImplementedException();
         }
