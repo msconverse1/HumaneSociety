@@ -11,14 +11,42 @@ namespace HumaneSociety
         internal static int? GetCategoryId()
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
-           
-          List<Category> categories= db.Categories.ToList()
 
-            int? Id =null;
-          
-            return Id ;
-        } 
-        
+            List<Category> categories = db.Categories.ToList();
+
+            return null ;
+        }
+        internal static void AddAnimal(Animal animal)
+        {
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            db.Animals.InsertOnSubmit(animal);
+        }
+        internal static Animal  GetAnimalByID(int ID)
+        {
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            return db.Animals.Where(a => a.AnimalId == ID).Single();
+            
+        }
+        internal static void Adopt(Animal animal, Client client)
+        {
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            Adoption adoption = new Adoption
+            {
+                AnimalId = animal.AnimalId,
+                ClientId = client.ClientId,
+                AdoptionFee = 75,
+                PaymentCollected = true
+            };
+
+            if (adoption.PaymentCollected == true)
+            {
+                adoption.ApprovalStatus = "Approved";
+                animal.AdoptionStatus = "Adopted";
+            }
+            db.Adoptions.InsertOnSubmit(adoption);
+            db.SubmitChanges();
+
+        }
 
         internal static List<USState> GetStates()
         {
@@ -170,6 +198,16 @@ namespace HumaneSociety
             employeeFromDb.Password = employee.Password;
 
             db.SubmitChanges();
+        }
+        public DietPlan GetDietPlan()
+        {
+
+            return DietPlan;
+        }
+
+        internal static void RemoveAnimal(object animal)
+        {
+            throw new NotImplementedException();
         }
     }
 }
