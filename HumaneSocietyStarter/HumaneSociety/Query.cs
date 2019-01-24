@@ -48,6 +48,20 @@ namespace HumaneSociety
             db.SubmitChanges();
 
         }
+        internal static void RemoveAnimal(object animal)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static int? GetDietPlanId(string diet)
+        {
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+
+            var categories = db.DietPlans.Where(a => a.FoodType == diet).Single().DietPlanId;
+
+            return categories;
+            throw new NotImplementedException();
+        }
 
         internal static List<USState> GetStates()
         {
@@ -247,14 +261,6 @@ namespace HumaneSociety
         }
    
  
-        internal static void RemoveAnimal(object animal)
-        {
-            throw new NotImplementedException();
-        }
 
-        internal static int? GetDietPlanId()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
