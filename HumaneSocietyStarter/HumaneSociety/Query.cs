@@ -53,9 +53,11 @@ namespace HumaneSociety
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
             Animal deletethis= db.Animals.Single(a => a == animal);
             Adoption adoption = db.Adoptions.Single(a => a == animal.Adoptions.Single());
+            Room room = db.Rooms.Single(a => a == animal.Rooms.Single());
             db.Animals.DeleteOnSubmit(deletethis);
             db.Adoptions.DeleteOnSubmit(adoption);
-            //when rooms are made they need to be delt also
+            db.Rooms.DeleteOnSubmit(room);
+            
             db.SubmitChanges();
         }
 
@@ -69,6 +71,17 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
 
+        internal static List<AnimalShot> GetShots(Animal animal)
+        {
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            var shots = db.AnimalShots.Where(s => s.AnimalId == animal.AnimalId).ToList();
+            return shots;
+        }
+
+        /// <summary>
+        /// Existing Code Base Do Not Make Changes to
+        /// </summary>
+        /// <returns></returns>
         internal static List<USState> GetStates()
         {
              HumaneSocietyDataContext  db = new HumaneSocietyDataContext();
@@ -210,10 +223,7 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
 
-        internal static List<AnimalShot> GetShots(Animal animal)
-        {
-            throw new NotImplementedException();
-        }
+   
 
         internal static Employee RetrieveEmployeeUser(string email, int employeeNumber)
         {
