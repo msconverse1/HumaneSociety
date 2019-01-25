@@ -15,9 +15,15 @@ namespace HumaneSociety
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
 
-           var categories = db.Categories.Where(a=>a.Name == name).Single().CategoryId;
-
-            return categories;
+           var categories = db.Categories.Where(a=>a.Name == name).SingleOrDefault();
+            if (categories == null)
+            {
+                Category category = new Category()
+                {
+                    Name = name
+                };
+            }
+            return categories.CategoryId;
         }
         internal static void AddAnimal(Animal animal)
         {
@@ -68,10 +74,10 @@ namespace HumaneSociety
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
 
-            var categories = db.DietPlans.Where(a => a.FoodType == diet).Single().DietPlanId;
+            var categories = db.DietPlans.Where(a => a.FoodType == diet).Single();
 
-            return categories;
-            throw new NotImplementedException();
+            return categories.DietPlanId;
+        
         }
 
         internal static List<AnimalShot> GetShots(Animal animal)
@@ -112,6 +118,8 @@ namespace HumaneSociety
 
         internal static void UpdateAdoption(bool v, Adoption adoption)
         {
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+
             throw new NotImplementedException();
         }
 
