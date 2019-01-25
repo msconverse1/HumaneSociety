@@ -20,7 +20,8 @@ namespace HumaneSociety
             //Query.GetCategoryId("Dog");
             // Query.GetDietPlanId("chow");
             //Query.RemoveAnimal(animal);
-            Query.GetShots(animal);
+            //Query.GetShots(animal);
+            Query.UpdateShot("booster", animal);
         }
     }
 }
