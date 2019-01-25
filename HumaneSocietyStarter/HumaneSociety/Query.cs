@@ -21,7 +21,10 @@ namespace HumaneSociety
                 Category category = new Category()
                 {
                     Name = name
+                   
                 };
+                db.Categories.InsertOnSubmit(category);
+                db.SubmitChanges();
             }
             return categories.CategoryId;
         }
