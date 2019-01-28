@@ -24,8 +24,15 @@ namespace HumaneSociety
             // Query.UpdateShot("booster", animal);
             // Query.EnterAnimalUpdate(animal,null);
             //Query.GetRoom(animal.AnimalId);
-            Query.SearchForAnimalByMultipleTraits();
-
+            //Query.SearchForAnimalByMultipleTraits();
+            Adoption adoption = new Adoption()
+            {
+                AnimalId = 4,
+                PaymentCollected = true,
+                
+               
+            };
+            Query.UpdateAdoption(true, adoption);
         }
     }
 }

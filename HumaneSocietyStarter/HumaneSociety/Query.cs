@@ -121,28 +121,10 @@ namespace HumaneSociety
 
         internal static void UpdateAdoption(bool v, Adoption adoption)
         {
-            //HumaneSocietyDataContext db = new HumaneSocietyDataContext();
-            //var adopted = db.Adoptions.Where(s => s.AnimalId == adoption.AnimalId).SingleOrDefault();
-
-            //if (adopted == null)
-            //{
-            //    Adoption nwadoption = new Adoption()
-            //    {
-            //        ClientId = adoption.ClientId,
-            //        AnimalId = adoption.AnimalId,
-            //        ApprovalStatus = v.ToString(),
-            //        AdoptionFee = adoption.AdoptionFee,
-            //        PaymentCollected = adoption.PaymentCollected,
-            //    };
-            //    db.Adoptions.InsertOnSubmit(nwadoption);
-
-            //}
-            //else
-            //{
-            //    adoption.ApprovalStatus = v.ToString();
-
-            //}
-            //db.SubmitChanges();
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            var adopted = db.Adoptions.Where(s => s.AnimalId == adoption.AnimalId).SingleOrDefault();
+            adopted.ApprovalStatus = v.ToString();
+            db.SubmitChanges();
 
         }
 
@@ -153,8 +135,6 @@ namespace HumaneSociety
             return roomID;
 
         }
-        //"1. Category", "2. Name", "3. Age", "4. Demeanor", "5. Kidfriendly",
-        //"6. Pet friendly", "7. Weight", "8. ID", "9. Finished" };
     internal static List<Animal> SearchForAnimalByMultipleTraits()
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();

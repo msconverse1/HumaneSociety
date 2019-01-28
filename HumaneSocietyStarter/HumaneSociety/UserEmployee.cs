@@ -97,7 +97,7 @@ namespace HumaneSociety
         private void CheckAnimalStatus()
         {
             Console.Clear();            
-            var animals = Query.SearchForAnimalByMultipleTraits().ToList();
+            var animals = Query.SearchForAnimalByMultipleTraits();
             if(animals.Count > 1)
             {
                 UserInterface.DisplayUserOptions("Several animals found");
@@ -222,7 +222,7 @@ namespace HumaneSociety
 
         private void RemoveAnimal()
         {            
-            var animals = Query.SearchForAnimalByMultipleTraits().ToList();
+            var animals = Query.SearchForAnimalByMultipleTraits();
             if (animals.Count > 1)
             {
                 UserInterface.DisplayUserOptions("Several animals found please refine your search.");
