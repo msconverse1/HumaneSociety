@@ -21,7 +21,8 @@ namespace HumaneSociety
             // Query.GetDietPlanId("chow");
             //Query.RemoveAnimal(animal);
             //Query.GetShots(animal);
-            Query.UpdateShot("booster", animal);
+           // Query.UpdateShot("booster", animal);
+                Query.EnterAnimalUpdate(animal,null);
         }
     }
 }

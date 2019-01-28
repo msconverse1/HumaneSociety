@@ -93,14 +93,14 @@ namespace HumaneSociety
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
             var shotid = db.Shots.Where(s => s.Name == v.ToLower()).Single();
-            var hasshot = db.Animals.Where(n => n.AnimalId == animal.AnimalId).Single();
+            var hasShot = db.Animals.Where(n => n.AnimalId == animal.AnimalId).Single();
 
-            var animalshot = db.AnimalShots.Where(a => a.AnimalId == hasshot.AnimalId && a.ShotId == shotid.ShotId).SingleOrDefault();
+            var animalshot = db.AnimalShots.Where(a => a.AnimalId == hasShot.AnimalId && a.ShotId == shotid.ShotId).SingleOrDefault();
             if (animalshot== null)
             {
                 AnimalShot animalShot = new AnimalShot() { ShotId = shotid.ShotId,
                                                                                     Animal = animal,
-                                                                                    AnimalId = hasshot.AnimalId,
+                                                                                    AnimalId = hasShot.AnimalId,
                                                                                     DateReceived = DateTime.Now,
                                                                                     Shot = db.Shots.Where(s => s.Name == v.ToLower()).Single() };
                 db.AnimalShots.InsertOnSubmit(animalShot);
@@ -137,6 +137,7 @@ namespace HumaneSociety
         }
         internal static void EnterAnimalUpdate(Animal animal, Dictionary<int, string> updates)
         {
+
             throw new NotImplementedException();
         }
 

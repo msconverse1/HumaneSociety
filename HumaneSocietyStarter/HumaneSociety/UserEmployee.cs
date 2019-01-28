@@ -181,7 +181,7 @@ namespace HumaneSociety
             
         }
 
-        private void UpdateAnimal(Animal animal, Dictionary<int, string> updates = null)
+        public void UpdateAnimal(Animal animal, Dictionary<int, string> updates = null)
         {
             if(updates == null)
             {
