@@ -10,7 +10,7 @@ namespace HumaneSociety
     {
         static void Main(string[] args)
         {
-            // PointOfEntry.Run();        
+           //  PointOfEntry.Run();        
 
             // Query.AddAnimal(animal);
               var animal = Query.GetAnimalByID(4);
@@ -23,7 +23,9 @@ namespace HumaneSociety
             //Query.GetShots(animal);
             // Query.UpdateShot("booster", animal);
             // Query.EnterAnimalUpdate(animal,null);
-            Query.GetRoom(animal.AnimalId);
+            //Query.GetRoom(animal.AnimalId);
+            Query.SearchForAnimalByMultipleTraits();
+
         }
     }
 }

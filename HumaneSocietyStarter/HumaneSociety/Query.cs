@@ -121,9 +121,29 @@ namespace HumaneSociety
 
         internal static void UpdateAdoption(bool v, Adoption adoption)
         {
-            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            //HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            //var adopted = db.Adoptions.Where(s => s.AnimalId == adoption.AnimalId).SingleOrDefault();
 
-            throw new NotImplementedException();
+            //if (adopted == null)
+            //{
+            //    Adoption nwadoption = new Adoption()
+            //    {
+            //        ClientId = adoption.ClientId,
+            //        AnimalId = adoption.AnimalId,
+            //        ApprovalStatus = v.ToString(),
+            //        AdoptionFee = adoption.AdoptionFee,
+            //        PaymentCollected = adoption.PaymentCollected,
+            //    };
+            //    db.Adoptions.InsertOnSubmit(nwadoption);
+
+            //}
+            //else
+            //{
+            //    adoption.ApprovalStatus = v.ToString();
+
+            //}
+            //db.SubmitChanges();
+
         }
 
         internal static Room GetRoom(int animalId)
@@ -131,12 +151,60 @@ namespace HumaneSociety
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
             var roomID = db.Rooms.Where(s => s.AnimalId == animalId).SingleOrDefault();
             return roomID;
-           
-        }
 
-        internal static List<Animal> SearchForAnimalByMultipleTraits()
+        }
+        //"1. Category", "2. Name", "3. Age", "4. Demeanor", "5. Kidfriendly",
+        //"6. Pet friendly", "7. Weight", "8. ID", "9. Finished" };
+    internal static List<Animal> SearchForAnimalByMultipleTraits()
         {
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+           var  searchfor =  UserInterface.GetAnimalCriteria();
+            List<Animal> list = new List<Animal>();
+            foreach (var item in searchfor)
+            {
+                switch (item.Key)
+                {
+                    case 1:
+                        var category = db.Animals.Where(a => a.Name == item.Value);
+                        list.AddRange(category);
+                        break;
+                    case 2:
+                        var name = db.Animals.Where(a => a.Name == item.Value);
+                        list.AddRange(name);
+                        break;
+                    case 3:
+                        var age = db.Animals.Where(a => (int)a.Age == Convert.ToInt32( item.Value));
+                        list.AddRange(age);
+                        break;
+                    case 4:
+                        var Demeanor = db.Animals.Where(a => a.Demeanor == item.Value);
+                        list.AddRange(Demeanor);
+                        break;
+                    case 5:
+                        var Kidfriendly = db.Animals.Where(a => a.KidFriendly == Convert.ToBoolean( item.Value));
+                        list.AddRange(Kidfriendly);
+                        break;
+                    case 6:
+                        var PetFriendly = db.Animals.Where(a => a.PetFriendly == Convert.ToBoolean(item.Value));
+                        list.AddRange(PetFriendly);
+                        break;
+                    case 7:
+                        var Weight = db.Animals.Where(a => (int)a.Weight == Convert.ToInt32(item.Value));
+                        list.AddRange(Weight);
+                        break;
+                    case 8:
+                        var ID = db.Animals.Where(a => a.AnimalId == Convert.ToInt32(item.Value));
+                        list.AddRange(ID);
+                        break;
+                    default:
+                        break;
+                }
+                return list;
+            }
+          
             throw new NotImplementedException();
+            // return listofAnimals;
+
         }
         internal static void EnterAnimalUpdate(Animal animal, Dictionary<int, string> updates)
         {
