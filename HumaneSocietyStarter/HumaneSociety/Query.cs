@@ -73,12 +73,25 @@ namespace HumaneSociety
             db.SubmitChanges();
         }
 
-        internal static int? GetDietPlanId(string diet)
+        internal static int? GetDietPlanId(string diet,int cups,string FoodType)
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
 
-            var categories = db.DietPlans.Where(a => a.FoodType == diet).Single();
+            var categories = db.DietPlans.Where(a => a.Name == diet).SingleOrDefault();
 
+
+            if (categories == null)
+            {
+                DietPlan category = new DietPlan()
+                {
+                    Name = diet,
+                    FoodAmountInCups = cups,
+                    FoodType = FoodType
+                };
+                db.DietPlans.InsertOnSubmit(category);
+                categories = category;
+            }
+            db.SubmitChanges();
             return categories.DietPlanId;
         
         }
