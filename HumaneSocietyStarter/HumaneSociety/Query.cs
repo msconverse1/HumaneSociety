@@ -241,10 +241,7 @@ namespace HumaneSociety
                         var Weight = db.Animals.Where(a => (int)a.Weight == Convert.ToInt32(item.Value));
                         list.AddRange(Weight);
                         break;
-                    case 8:
-                        var ID = db.Animals.Where(a => a.AnimalId == Convert.ToInt32(item.Value));
-                        list.AddRange(ID);
-                        break;
+
                     default:
                         break;
                 }
@@ -253,8 +250,53 @@ namespace HumaneSociety
         }
         internal static void EnterAnimalUpdate(Animal animal, Dictionary<int, string> updates)
         {
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            foreach (var item in updates)
+            {
+                switch (item.Key)
+                {
+                    case 1:
+                        var category = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Single();
+                        category.CategoryId = Convert.ToInt32(item.Value);
+                        db.SubmitChanges();
+                        break;
+                    case 2:
+                        var name = db.Animals.Where(a => a.AnimalId == animal.AnimalId).First();
+                        name.Name = item.Value;
+                        db.SubmitChanges();
+                        break;
+                    case 3:
+                        var age = db.Animals.Where(a => a.AnimalId == animal.AnimalId);
+                        age.Single().Age = Convert.ToInt32(item.Value);
+                        db.SubmitChanges();
+                        break;
+                    case 4:
+                        var Demeanor = db.Animals.Where(a => a.AnimalId == animal.AnimalId);
+                        Demeanor.Single().Demeanor = item.Value;
+                        db.SubmitChanges();
+                        break;
+                    case 5:
+                        var Kidfriendly = db.Animals.Where(a => a.AnimalId == animal.AnimalId);
+                        Kidfriendly.Single().KidFriendly = Convert.ToBoolean(item.Value);
+                        db.SubmitChanges();
+                        break;
+                    case 6:
+                        var PetFriendly = db.Animals.Where(a => a.AnimalId == animal.AnimalId);
+                        PetFriendly.Single().PetFriendly = Convert.ToBoolean(item.Value);
+                        db.SubmitChanges();
+                        break;
+                    case 7:
+                        var Weight = db.Animals.Where(a => a.AnimalId == animal.AnimalId);
+                        Weight.Single().Weight = Convert.ToInt32(item.Value) ;
+                        db.SubmitChanges();
+                        break;
 
-            throw new NotImplementedException();
+                    default:
+                        break;
+                }
+               
+            }
+            
         }
 
         /// <summary>

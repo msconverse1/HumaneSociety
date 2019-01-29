@@ -187,18 +187,18 @@ namespace HumaneSociety
             {
                 updates = new Dictionary<int, string>();
             }
+            string input;
             List<string> options = new List<string>() { "Select Updates: (Enter number and choose finished when finished)", "1. Category", "2. Name", "3. Age", "4. Demeanor", "5. Kid friendly", "6. Pet friendly", "7. Weight", "8. Finished" };
-            UserInterface.DisplayUserOptions(options);
-            string input = UserInterface.GetUserInput();
-            if(input.ToLower() == "8" ||input.ToLower() == "finished")
+
+            do
             {
-                Query.EnterAnimalUpdate(animal, updates);
-            }
-            else
-            {
-                updates = UserInterface.EnterSearchCriteria(updates, input);
-                UpdateAnimal(animal);
-            }
+                UserInterface.DisplayUserOptions(options);
+                 input = UserInterface.GetUserInput();
+                 updates = UserInterface.EnterSearchCriteria(updates, input);
+            } while (input !="8" );
+            Query.EnterAnimalUpdate(animal, updates);
+           
+
         }
 
         private void CheckAnimalStatus(int iD)
