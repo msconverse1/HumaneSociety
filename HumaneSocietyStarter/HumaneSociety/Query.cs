@@ -77,10 +77,7 @@ namespace HumaneSociety
         internal static int? GetDietPlanId(string diet,int cups,string FoodType)
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
-
             var categories = db.DietPlans.Where(a => a.Name == diet).SingleOrDefault();
-
-
             if (categories == null)
             {
                 DietPlan category = new DietPlan()
@@ -93,8 +90,7 @@ namespace HumaneSociety
                 categories = category;
             }
             db.SubmitChanges();
-            return categories.DietPlanId;
-        
+            return categories.DietPlanId; 
         }
 
         internal static List<AnimalShot> GetShots(Animal animal)
@@ -131,9 +127,7 @@ namespace HumaneSociety
       
         internal static void RunEmployeeQueries(Employee employee, string v)
         {
-           
-            EmployeeDelegate employeeDelegate;
-
+         EmployeeDelegate employeeDelegate;
             switch (v)
             {
                 case "update":
@@ -148,9 +142,7 @@ namespace HumaneSociety
                 case "create":
                     employeeDelegate = CreateEmployee;
                     break;
-            }
-            
-            throw new NotImplementedException();
+            }  
         }
         internal static void UpdateEmployee(Employee employee, string v)
         {
@@ -163,7 +155,6 @@ namespace HumaneSociety
                 checkagainst.LastName = employee.LastName;
                 checkagainst.Email = employee.Email;
             }
-
             db.SubmitChanges();
         }
         internal static void ReadEmployee(Employee employee, string v)
@@ -188,18 +179,16 @@ namespace HumaneSociety
             var adopted = db.Adoptions.Where(s => s.AnimalId == adoption.AnimalId).SingleOrDefault();
             adopted.ApprovalStatus = v.ToString();
             db.SubmitChanges();
-
         }
 
         internal static Room GetRoom(int animalId)
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
-            var roomID = db.Rooms.Where(a => a.RoomNumber != null && a.AnimalId == animalId).SingleOrDefault();
-           // var updateroom = db.Rooms.Where(a => a.RoomNumber != null).SingleOrDefault();
-            if (roomID.AnimalId == null )
+            var roomID = db.Rooms.Where(a =>  a.AnimalId == animalId).SingleOrDefault();
+      
+            if (roomID == null )
             {
-                roomID.AnimalId = animalId;
-                db.SubmitChanges();
+                SetRoom(animalId);
             }
              
             
@@ -209,7 +198,11 @@ namespace HumaneSociety
         internal static void SetRoom(int animalID)
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
-
+            var roomID = db.Rooms.FirstOrDefault(a => a.AnimalId == null);
+          
+            var temp = roomID.RoomNumber;
+            roomID.AnimalId = animalID;
+            db.SubmitChanges();
         }
     internal static List<Animal> SearchForAnimalByMultipleTraits()
         {
@@ -255,12 +248,8 @@ namespace HumaneSociety
                     default:
                         break;
                 }
-                return list;
             }
-          
-            throw new NotImplementedException();
-            // return listofAnimals;
-
+            return list;
         }
         internal static void EnterAnimalUpdate(Animal animal, Dictionary<int, string> updates)
         {
