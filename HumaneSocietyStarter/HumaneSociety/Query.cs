@@ -10,7 +10,7 @@ namespace HumaneSociety
     {
         /// <summary>
         /// TODO
-
+        public delegate void EmployeeDelegate(Employee employee, string v);
         internal static int? GetCategoryId(string name)
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
@@ -31,6 +31,7 @@ namespace HumaneSociety
         internal static void AddAnimal(Animal animal)
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            
             db.Animals.InsertOnSubmit(animal);
             db.SubmitChanges();
         }
@@ -126,12 +127,61 @@ namespace HumaneSociety
             }
             db.SubmitChanges();
         }
-            
+
+      
         internal static void RunEmployeeQueries(Employee employee, string v)
         {
+           
+            EmployeeDelegate employeeDelegate;
+
+            switch (v)
+            {
+                case "update":
+                    employeeDelegate = UpdateEmployee;
+                    break;
+                case "read" :
+                    employeeDelegate = ReadEmployee;
+                    break;
+                case  "delete":
+                    employeeDelegate = DeleteEmployee;
+                    break;
+                case "create":
+                    employeeDelegate = CreateEmployee;
+                    break;
+            }
+            
             throw new NotImplementedException();
         }
+        internal static void UpdateEmployee(Employee employee, string v)
+        {
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            var checkagainst = db.Employees.Where(a => a.EmployeeId == employee.EmployeeId).Single();
+            if (CheckEmployeeUserNameExist(checkagainst.UserName))
+            {
+                checkagainst.Email = employee.Email;
+                checkagainst.FirstName = employee.FirstName;
+                checkagainst.LastName = employee.LastName;
+                checkagainst.Email = employee.Email;
+            }
 
+            db.SubmitChanges();
+        }
+        internal static void ReadEmployee(Employee employee, string v)
+        {
+            RetrieveEmployeeUser(employee.Email, (int)employee.EmployeeNumber);
+        }
+        internal static void DeleteEmployee(Employee employee, string v)
+        {
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            db.Employees.DeleteOnSubmit(employee);
+            db.SubmitChanges();
+        }
+        internal static void CreateEmployee(Employee employee, string v)
+        {
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            db.Employees.DeleteOnSubmit(employee);
+            db.SubmitChanges();
+        }
         internal static void UpdateAdoption(bool v, Adoption adoption)
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
@@ -144,8 +194,21 @@ namespace HumaneSociety
         internal static Room GetRoom(int animalId)
         {
             HumaneSocietyDataContext db = new HumaneSocietyDataContext();
-            var roomID = db.Rooms.Where(s => s.AnimalId == animalId).SingleOrDefault();
+            var roomID = db.Rooms.Where(a => a.RoomNumber != null && a.AnimalId == animalId).SingleOrDefault();
+           // var updateroom = db.Rooms.Where(a => a.RoomNumber != null).SingleOrDefault();
+            if (roomID.AnimalId == null )
+            {
+                roomID.AnimalId = animalId;
+                db.SubmitChanges();
+            }
+             
+            
             return roomID;
+
+        }
+        internal static void SetRoom(int animalID)
+        {
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
 
         }
     internal static List<Animal> SearchForAnimalByMultipleTraits()

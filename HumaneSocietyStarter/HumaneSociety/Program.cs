@@ -18,12 +18,12 @@ namespace HumaneSociety
             // Query.Adopt(animal, client);
             // Query.GetAnimalByID(3);
             //Query.GetCategoryId("Dog");
-             Query.GetDietPlanId("newtype",2,"any");
+           //  Query.GetDietPlanId("newtype",2,"any");
             //Query.RemoveAnimal(animal);
             //Query.GetShots(animal);
             // Query.UpdateShot("booster", animal);
             // Query.EnterAnimalUpdate(animal,null);
-            //Query.GetRoom(animal.AnimalId);
+            Query.GetRoom(animal.AnimalId);
             //Query.SearchForAnimalByMultipleTraits();
             //Adoption adoption = new Adoption()
             //{
